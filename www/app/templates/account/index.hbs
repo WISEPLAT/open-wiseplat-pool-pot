@@ -1,0 +1,36 @@
+<div class="container">
+  {{#if model.workers}}
+  <h4>Ваши машины</h4>
+  <table class="table table-condensed table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Скорость (приблизительно, короткий интервал)</th>
+        <th>Скорость (точнее, длинный интервал)</th>
+        <th>Последняя активность</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each-in model.workers as |k v|}}
+        <tr class="{{if v.offline "warning" "success"}}">
+          <td>{{k}}</td>
+          <td>{{format-hashrate v.hr}}</td>
+          <td>{{format-hashrate v.hr2}}</td>
+          <td>{{format-relative (seconds-to-ms v.lastBeat)}}</td>
+        </tr>
+      {{/each-in}}
+    </tbody>
+  </table>
+  {{else}}
+    <h3>Нет работающих машин</h3>
+  {{/if}}
+  <div class="alert alert-info" role="alert">
+    <span class="sr-only">Примечание:</span>
+    Ваша средняя скорость будет постепенно уточняться до тех пор, пока Вы не отправите достаточно решений для её оценки.<br/>
+    Есть два окна оценки, длинное и короткое. Длинное окно составляет 3 часа, а короткое - 30 минут.<br/>
+    Неисправные машины будут подсвечены в таблице в том случае, если они не отправляли решений в течение 1/2 короткого окна оценки, так что Вы сможете их идентифицировать и принять меры по устранению причин неполадки.
+  </div>
+  <div class="alert alert-info" role="alert">
+    <strong>Ваша статистика в формате JSON:</strong> <a href="api/accounts/{{model.login}}">скачать</a>.
+  </div>
+</div>

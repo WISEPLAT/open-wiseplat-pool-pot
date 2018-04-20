@@ -1,0 +1,116 @@
+{
+	"threads": 2,
+	"coin": "wsh",
+	"name": "main",
+
+	"proxy": {
+		"enabled": true,
+		"listen": "127.0.0.1:8888",
+		"limitHeadersSize": 1024,
+		"limitBodySize": 256,
+		"behindReverseProxy": false,
+		"blockRefreshInterval": "1s",
+		"stateUpdateInterval": "3s",
+		"difficulty": 2000000000,
+		"miningFee": 1.5,
+		"potA": 0.8,
+		"potCap": 1.5,
+		"hashrateExpiration": "3h",
+
+		"healthCheck": true,
+		"maxFails": 100,
+
+		"stratum": {
+			"enabled": true,
+			"listen": "0.0.0.0:3333",
+			"protocol": "WiseplatStratum",
+			"xnSpace": [0, 255],
+			"xnSize": 2,
+			"timeout": "120s",
+			"maxConn": 8192
+		},
+
+		"policy": {
+			"workers": 8,
+			"resetInterval": "60m",
+			"refreshInterval": "1m",
+
+			"banning": {
+				"enabled": false,
+				"ipset": "blacklist",
+				"timeout": 1800,
+				"invalidPercent": 30,
+				"checkThreshold": 30,
+				"malformedLimit": 5
+			},
+			"limits": {
+				"enabled": false,
+				"limit": 30,
+				"grace": "5m",
+				"limitJump": 10
+			}
+		}
+	},
+
+	"api": {
+		"enabled": true,
+		"purgeOnly": false,
+		"purgeInterval": "10m",
+		"listen": "0.0.0.0:8080",
+		"statsCollectInterval": "5s",
+		"hashrateWindow": "30m",
+		"hashrateLargeWindow": "3h",
+		"payments": 30,
+		"blocks": 50,
+		"longShifts": 30,
+		"shortShifts": 24
+	},
+
+	"upstreamCheckInterval": "5s",
+	"upstream": [
+		{
+			"name": "main",
+			"url": "http://127.0.0.1:8747",
+			"timeout": "10s"
+		},
+		{
+			"name": "backup",
+			"url": "http://127.0.0.2:8747",
+			"timeout": "10s"
+		}
+	],
+
+	"redis": {
+		"network": "unix",
+		"endpoint": "/var/run/redis.sock",
+		"poolSize": 10,
+		"database": 0,
+		"password": ""
+	},
+
+	"payouts": {
+		"enabled": false,
+		"requirePeers": 25,
+		"interval": "120m",
+		"daemon": "http://127.0.0.1:8747",
+		"timeout": "10s",
+		"address": "0x0",
+		"gas": "21000",
+		"gasPrice": "50000000000",
+		"autoGas": true,
+		"thresholdNormal": 500000000,
+		"normalFee": 0,
+		"thresholdInactive": 50000000,
+		"inactiveFee": 100000,
+		"bgsave": false
+	},
+
+	"shifts": {
+		"enabled": false,
+		"longInterval": "24h",
+		"shortInterval" : "1h",
+		"keepLong" : "720h",
+		"keepShort": "24h",
+		"flushInterval": "24h"
+	}
+}

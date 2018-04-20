@@ -1,0 +1,20 @@
+<table class="table table-condensed table-striped">
+  <thead>
+    <tr>
+      <th>Блоки</th>
+      <th>Удача за период</th>
+      <th>Опоздавшие блоки</th>
+      <th>Отклоненные блоки</th>
+    </tr>
+  </thead>
+  <tbody>
+  {{#each-in model.luck as |total row|}}
+  <tr>
+    <td>{{total}}</td>
+    <td>{{format-number row.luck style='percent'}}</td>
+    <td>{{format-number row.uncleRate style='percent'}}</td>
+    <td>{{format-number row.orphanRate style='percent'}}</td>
+  </tr>
+  {{/each-in}}
+  </tbody>
+</table>
